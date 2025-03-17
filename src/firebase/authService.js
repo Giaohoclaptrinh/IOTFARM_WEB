@@ -1,31 +1,41 @@
-import { auth, db } from "./firebaseConfig";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
+
+// Đăng ký tài khoản và lưu vai trò
+export const registerUser = async (email, password, role) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      email,
+      role // "admin" hoặc "user"
+    });
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
 // Đăng nhập
-export const login = async (email, password) => {
+export const loginUser = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error) {
-    console.error("Login failed:", error.message);
-    return null;
+    throw error;
   }
 };
 
 // Đăng xuất
-export const logout = async () => {
+export const logoutUser = async () => {
   await signOut(auth);
 };
 
-// Lấy quyền của user từ Firestore
+// Lấy vai trò người dùng từ Firestore
 export const getUserRole = async (uid) => {
-  const userRef = doc(db, "users", uid);
-  const userSnap = await getDoc(userRef);
-  
-  if (userSnap.exists()) {
-    return userSnap.data().role;
-  } else {
-    return "user"; // Mặc định nếu không tìm thấy
-  }
+  const userDoc = await getDoc(doc(db, "users", uid));
+  return userDoc.exists() ? userDoc.data().role : null;
 };

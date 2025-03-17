@@ -4,7 +4,7 @@ import Devices from "../pages/devices/Devices";
 import DeviceSetup from "../pages/devices/DeviceSetup"
 import Dashboard from "../pages/dashboards/dashboard";
 import ListDashboards from "../pages/dashboards/listdashboard";
-import Login from "../pages/login";
+import Login from "../pages/login/Login";
 import { AuthProvider } from '@/contexts/Auth'; //
 import DateRangePicker from "@/components/Organisms/DatePicker";
 
