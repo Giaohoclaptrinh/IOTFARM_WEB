@@ -5,8 +5,17 @@ import { RouterProvider } from "react-router-dom";
 
 function App() {
   return (
-    <RouterProvider router={router} future={{ v7_startTransition: true }}/>
-  )
+    <Router>
+      <Routes>
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        {/* Bảo vệ trang Admin */}
+        <Route path="/admin" element={<PrivateRoute requiredRole="admin" />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
