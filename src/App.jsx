@@ -1,7 +1,7 @@
-// import { createRoot } from "react-dom/client";
-import { router } from "./router";
+import { createRoot } from "react-dom/client";
+import { router } from "./router/index";
 import { RouterProvider } from "react-router-dom";
-// import { MainLayout } from "./layout";
+import { MainLayout } from "./layout";
 
 // function App() {
 //   return (

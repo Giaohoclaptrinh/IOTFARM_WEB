@@ -1,6 +1,6 @@
 // 
 import { useState } from "react";
-import { loginUser } from "../services/authService";
+import { loginUser } from "src/services/firebase/authService.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
